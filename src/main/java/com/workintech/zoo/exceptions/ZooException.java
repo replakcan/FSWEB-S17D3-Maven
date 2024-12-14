@@ -12,4 +12,12 @@ public class ZooException extends RuntimeException {
         super(message);
         this.status = status;
     }
+
+    public HttpStatus getHttpStatus() {
+        return this.status;
+    }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.status = httpStatus;
+    }
 }
