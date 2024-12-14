@@ -1,7 +1,9 @@
 package com.workintech.zoo.controller;
 
 import com.workintech.zoo.entity.Kangaroo;
+import com.workintech.zoo.exceptions.ZooException;
 import jakarta.annotation.PostConstruct;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -26,6 +28,13 @@ public class KangarooController {
 
     @GetMapping("/{id}")
     public Kangaroo findById(@PathVariable("id") long id) {
+        if (id <= 0) {
+            throw new ZooException("Id canNOT be less than or equal to zero", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!kangaroos.containsKey(id)) {
+            throw new ZooException("Not a valid id", HttpStatus.NOT_FOUND);
+        }
         return kangaroos.get(id);
     }
 

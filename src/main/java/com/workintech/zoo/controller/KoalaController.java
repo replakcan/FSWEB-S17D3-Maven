@@ -2,7 +2,9 @@ package com.workintech.zoo.controller;
 
 import com.workintech.zoo.entity.Kangaroo;
 import com.workintech.zoo.entity.Koala;
+import com.workintech.zoo.exceptions.ZooException;
 import jakarta.annotation.PostConstruct;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,6 +29,13 @@ public class KoalaController {
 
     @GetMapping("/{id}")
     public Koala findById(@PathVariable("id") long id) {
+        if (id <= 0) {
+            throw new ZooException("Id canNOT be less than or equal to zero", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!koalas.containsKey(id)) {
+            throw new ZooException("Not a valid id", HttpStatus.NOT_FOUND);
+        }
         return koalas.get(id);
     }
 
