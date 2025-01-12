@@ -22,7 +22,7 @@ public class KoalaController {
         koalas = new HashMap<>();
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Koala> findAll() {
         return koalas.values().stream().toList();
     }
@@ -39,18 +39,25 @@ public class KoalaController {
         return koalas.get(id);
     }
 
-    @PostMapping("/")
-    public void save(@RequestBody Koala koala) {
+    @PostMapping
+    public Koala save(@RequestBody Koala koala) {
         koalas.put(koala.getId(), koala);
+
+        return koala;
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") long id, @RequestBody Koala koala) {
+    public Koala update(@PathVariable("id") long id, @RequestBody Koala koala) {
         koalas.put(id, koala);
+
+        return koala;
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") long id) {
+    public Koala delete(@PathVariable("id") long id) {
+        Koala koala = koalas.get(id);
         koalas.remove(id);
+
+        return koala;
     }
 }

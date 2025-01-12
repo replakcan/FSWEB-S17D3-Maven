@@ -21,7 +21,7 @@ public class KangarooController {
         kangaroos = new HashMap<>();
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Kangaroo> findAll() {
         return kangaroos.values().stream().toList();
     }
@@ -38,19 +38,26 @@ public class KangarooController {
         return kangaroos.get(id);
     }
 
-    @PostMapping("/")
-    public void save(@RequestBody Kangaroo kangaroo) {
+    @PostMapping
+    public Kangaroo save(@RequestBody Kangaroo kangaroo) {
         kangaroos.put(kangaroo.getId(), kangaroo);
+
+        return kangaroo;
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") long id, @RequestBody Kangaroo kangaroo) {
+    public Kangaroo update(@PathVariable("id") long id, @RequestBody Kangaroo kangaroo) {
         kangaroos.put(id, kangaroo);
+
+        return kangaroo;
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") long id) {
+    public Kangaroo delete(@PathVariable("id") long id) {
+        Kangaroo kangaroo = kangaroos.get(id);
         kangaroos.remove(id);
+
+        return kangaroo;
     }
 
 }
